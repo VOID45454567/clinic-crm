@@ -1,10 +1,17 @@
+from app.exception_handlers import setup_exception_handlers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
-from app.config import settings
-from app.db import engine
+from app.conf.config import settings
+from app.db.connect import engine
 
-app = FastAPI(title="Clinic CRM API")
+from app.routes.auth_router import router as auth_router
+
+app = FastAPI(
+    title="Clinic CRM API",
+    description="API для управления медицинской клиникой",
+    version="1.0.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,6 +20,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+setup_exception_handlers(app)
+
+app.include_router(router=auth_router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health")
