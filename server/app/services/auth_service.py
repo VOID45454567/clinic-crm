@@ -1,23 +1,21 @@
-from app.db.models.User import UserPublic
-from app.http.responses.auth.login_response import LoginResponse
-import jwt
 from datetime import timedelta
+
+import jwt
 from fastapi import Depends
-from sqlmodel.ext.asyncio.session import AsyncSession
 from fastapi.security.oauth2 import OAuth2PasswordBearer
+from sqlmodel.ext.asyncio.session import AsyncSession
 
-from app.db.connect import get_session
-from app.http.exceptions.domain import (
-    FobbidenException,
-    UnauthorizedException,
-    InvalidCredentialsException,
-)
-
-from app.services.user_service import find_user_by_id, find_user_by_email
-from app.services.jwt_service import decode_token, create_token
 from app.conf.config import settings
+from app.db.connect import get_session
+from app.db.models.user import UserPublic
+from app.http.exceptions.domain import (
+    InvalidCredentialsException,
+    UnauthorizedException,
+)
+from app.http.responses.auth.login_response import LoginResponse
 from app.security import verify_password
-from app.db.models import User
+from app.services.jwt_service import create_token, decode_token
+from app.services.user_service import find_user_by_email, find_user_by_id
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
@@ -36,7 +34,7 @@ class AuthService:
         try:
             payload = decode_token(token)
         except jwt.PyJWTError:
-            raise UnauthorizedException("Невалидный токен")
+            raise UnauthorizedException("Невалидный токен") from None
 
         user_id = payload.get("sub")
         if (user_id is None) or (payload.get("type") != "access"):

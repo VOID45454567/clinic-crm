@@ -1,6 +1,7 @@
+from datetime import UTC, datetime
 from typing import Literal
-from sqlmodel import SQLModel, Field
-from datetime import datetime, timezone
+
+from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
@@ -12,7 +13,7 @@ class UserBase(SQLModel):
 class User(UserBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     hashed_password: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class UserCreate(UserBase):

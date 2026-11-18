@@ -1,11 +1,10 @@
-from app.security import ALGORITHM
+from datetime import UTC, datetime, timedelta
+from typing import Any, Literal
+
 import jwt
+
 from app.conf.config import settings
-from datetime import timezone
-from datetime import datetime
-from typing import Any
-from typing import Literal
-from datetime import timedelta
+from app.security import ALGORITHM
 
 
 def create_token(
@@ -15,7 +14,7 @@ def create_token(
     extra_data: dict[str, Any] | None = None,
 ) -> str:
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     payload = {
         "sub": subject,
         "type": token_type,

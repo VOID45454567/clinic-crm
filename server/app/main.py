@@ -1,10 +1,10 @@
-from app.exception_handlers import setup_exception_handlers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
+
 from app.conf.config import settings
 from app.db.connect import engine
-
+from app.exception_handlers import setup_exception_handlers
 from app.routes.auth_router import router as auth_router
 
 app = FastAPI(

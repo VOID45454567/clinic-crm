@@ -1,7 +1,8 @@
-from app.db.models.User import UserPublic
-from app.http.responses.auth.login_response import LoginResponse
 from fastapi import APIRouter, Depends
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
+
+from app.db.models.user import UserPublic
+from app.http.responses.auth.login_response import LoginResponse
 from app.services.auth_service import AuthService, oauth_scheme
 
 router = APIRouter(prefix="/auth", tags=["auth"])

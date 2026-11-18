@@ -1,5 +1,6 @@
-from fastapi import status
 from typing import Any
+
+from fastapi import status
 
 
 class DomainException(Exception):
