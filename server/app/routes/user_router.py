@@ -1,7 +1,8 @@
+from fastapi import APIRouter, Depends
+
+from app.db.models.user import UserCreate, UserPublic, UserUpdate
 from app.middleware.check_role import RoleChecker
 from app.services.user_service import UserService
-from app.db.models.user import UserCreate, UserUpdate, UserPublic
-from fastapi import APIRouter, Depends
 
 router = APIRouter(prefix="/users", tags=["users"])
 

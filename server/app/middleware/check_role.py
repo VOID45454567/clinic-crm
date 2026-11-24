@@ -1,8 +1,9 @@
-from app.security import oauth_scheme
 from fastapi import Depends
-from app.services.auth_service import AuthService
+
 from app.db.models.user import UserPublic
 from app.http.exceptions.domain import ForbiddenException
+from app.security import oauth_scheme
+from app.services.auth_service import AuthService
 
 
 class RoleChecker:

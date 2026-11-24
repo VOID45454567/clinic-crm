@@ -1,15 +1,14 @@
-from app.security import hash_password
+from fastapi import Depends
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
+
+from app.db.connect import get_session
+from app.db.models.user import User, UserCreate, UserUpdate
 from app.http.exceptions.domain import (
     ConflictException,
     UserNotFoundException,
 )
-from app.db.connect import get_session
-from fastapi import Depends
-from app.db.models.user import UserCreate, UserUpdate
-from sqlmodel import select
-from sqlmodel.ext.asyncio.session import AsyncSession
-
-from app.db.models.user import User
+from app.security import hash_password
 
 
 class UserService:

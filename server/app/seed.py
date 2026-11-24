@@ -6,7 +6,6 @@ from app.db.connect import SessionLocal
 from app.db.models.user import User
 from app.security import hash_password
 
-
 SEED_USERS = [
     {
         "email": "admin@clinic.local",
