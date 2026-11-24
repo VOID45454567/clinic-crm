@@ -6,6 +6,7 @@ from app.conf.config import settings
 from app.db.connect import engine
 from app.exception_handlers import setup_exception_handlers
 from app.routes.auth_router import router as auth_router
+from app.routes.user_router import router as user_router
 
 app = FastAPI(
     title="Clinic CRM API",
@@ -24,6 +25,7 @@ app.add_middleware(
 setup_exception_handlers(app)
 
 app.include_router(router=auth_router, prefix="/api/v1")
+app.include_router(router=user_router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health")

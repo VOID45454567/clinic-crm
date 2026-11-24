@@ -39,9 +39,9 @@ class ConflictException(DomainException):
     message = "conflict"
 
 
-class FobbidenException(DomainException):
+class ForbiddenException(DomainException):
     status_code = status.HTTP_403_FORBIDDEN
-    message = "Forbidden"
+    message = "Недостаточно прав"
 
 
 class UnauthorizedException(DomainException):

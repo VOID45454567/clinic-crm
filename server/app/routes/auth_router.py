@@ -1,9 +1,10 @@
+from app.security import oauth_scheme
 from fastapi import APIRouter, Depends
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
 from app.db.models.user import UserPublic
 from app.http.responses.auth.login_response import LoginResponse
-from app.services.auth_service import AuthService, oauth_scheme
+from app.services.auth_service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -19,3 +20,8 @@ async def login(
 @router.get("/me", response_model=UserPublic)
 async def get_me(service: AuthService = Depends(), token: str = Depends(oauth_scheme)):
     return await service.extract_user(token)
+
+
+@router.post("/refresh", response_model=LoginResponse)
+async def refresh_token(refresh_token: str, service: AuthService = Depends()):
+    return await service.refresh_tokens(refresh_token)
